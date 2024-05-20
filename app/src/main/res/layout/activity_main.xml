@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/appName"
+        android:textSize="@dimen/_20ssp"
+        android:fontFamily="@font/script_regular"
+        android:textColor="@color/colorMain"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchFieldLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:endIconMode="clear_text"
+        app:boxBackgroundColor="@color/colorLight"
+        app:startIconDrawable="@drawable/ic_search"
+        app:startIconTint="@color/colorSecondary"
+        app:hintTextColor="@color/colorSecondary"
+        app:boxCornerRadiusTopEnd="@dimen/_20sdp"
+        app:boxStrokeColor="@color/colorSecondary"
+        app:cursorColor="@color/colorSecondary"
+        app:boxCornerRadiusBottomEnd="@dimen/_20sdp"
+        app:boxCornerRadiusTopStart="@dimen/_20sdp"
+        app:boxCornerRadiusBottomStart="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="@id/appTitle"
+        app:layout_constraintEnd_toEndOf="@+id/appTitle"
+        app:layout_constraintTop_toBottomOf="@id/appTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_field_text"
+            android:textCursorDrawable="@null"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
+            android:textColorHint="@color/colorSecondary"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notesViewRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        app:layout_constraintBottom_toTopOf="@id/bottomMenu"
+        app:layout_constraintStart_toStartOf="@id/searchFieldLayout"
+        app:layout_constraintEnd_toEndOf="@+id/searchFieldLayout"
+        app:layout_constraintTop_toBottomOf="@id/searchFieldLayout"/>
+
+    <LinearLayout
+        android:id="@+id/bottomMenu"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/colorSecondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal" />
+
+    <ImageView
+        android:id="@+id/addNoteBtn"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:src="@drawable/ic_add"
+        android:background="@drawable/note_add_btn_layout"
+        app:layout_constraintTop_toTopOf="@+id/bottomMenu"
+        app:layout_constraintBottom_toTopOf="@+id/bottomMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/colorMain" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

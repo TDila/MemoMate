@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MemoMate</string>
+    <string name="appName">MemoMate</string>
+    <string name="search_field_text">Search</string>
+</resources>
