@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     android:background="@color/colorPrimary">
 
     <TextView
@@ -26,6 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:endIconMode="clear_text"
+        android:textColorHint="@color/colorSecondary"
         app:boxBackgroundColor="@color/colorLight"
         app:startIconDrawable="@drawable/ic_search"
         app:startIconTint="@color/colorSecondary"
@@ -47,7 +48,6 @@
             android:textCursorDrawable="@null"
             android:textColorHighlight="@color/colorPrimary"
             android:textColor="@color/colorSecondary"
-            android:textColorHint="@color/colorSecondary"
             android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
