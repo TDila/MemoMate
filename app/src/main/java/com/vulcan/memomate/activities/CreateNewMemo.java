@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.vulcan.memomate.R;
 
-public class CreateNewNote extends AppCompatActivity {
+public class CreateNewMemo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_new_note);
+        setContentView(R.layout.activity_create_new_memo);
     }
 }

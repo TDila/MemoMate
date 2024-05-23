@@ -2,8 +2,8 @@
     <string name="app_name">MemoMate</string>
     <string name="appName">MemoMate</string>
     <string name="search_field_text">Search</string>
-    <string name="new_note_datetime_example">Monday, 06 May 2024 19:13 pm</string>
-    <string name="noteTitleHint">Title</string>
-    <string name="noteSubtitleHint">Subtitle</string>
-    <string name="note_content_hint">Note Content...</string>
+    <string name="new_memo_datetime_example">Monday, 06 May 2024 19:13 pm</string>
+    <string name="memoTitleHint">Title</string>
+    <string name="memoSubtitleHint">Subtitle</string>
+    <string name="memo_content_hint">Memo Content...</string>
 </resources>

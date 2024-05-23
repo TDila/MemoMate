@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CreateNewNote"
+    tools:context=".activities.CreateNewMemo"
     android:background="@color/colorPrimary">
 
     <LinearLayout
@@ -47,7 +47,7 @@
         android:id="@+id/newNoteDateTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/new_note_datetime_example"
+        android:text="@string/new_memo_datetime_example"
         android:textColor="@color/colorSecondary"
         android:textSize="@dimen/_10ssp"
         android:fontFamily="@font/ubuntu_regular"
@@ -67,7 +67,7 @@
         android:fontFamily="@font/ubuntu_medium"
         android:textColor="@color/colorSecondary"
         android:textColorHighlight="@color/colorLight"
-        android:hint="@string/noteTitleHint"
+        android:hint="@string/memoTitleHint"
         android:textColorHint="@color/colorSecondary"
         app:layout_constraintStart_toStartOf="@id/newNoteDateTime"
         app:layout_constraintEnd_toEndOf="@id/newNoteDateTime"
@@ -81,7 +81,7 @@
         android:includeFontPadding="false"
         android:layout_marginTop="@dimen/_12sdp"
         android:textSize="@dimen/_16ssp"
-        android:hint="@string/noteSubtitleHint"
+        android:hint="@string/memoSubtitleHint"
         android:fontFamily="@font/ubuntu_medium"
         android:textColorHighlight="@color/colorLight"
         android:textColor="@color/colorSecondary"
@@ -107,7 +107,7 @@
         android:textColor="@color/colorSecondary"
         android:textColorHighlight="@color/colorLight"
         android:textColorHint="@color/colorSecondary"
-        android:hint="@string/note_content_hint"
+        android:hint="@string/memo_content_hint"
         app:layout_constraintStart_toStartOf="@+id/noteSubTitle"
         app:layout_constraintEnd_toEndOf="@+id/noteSubTitle"
         app:layout_constraintTop_toBottomOf="@+id/noteSubTitle"/>
