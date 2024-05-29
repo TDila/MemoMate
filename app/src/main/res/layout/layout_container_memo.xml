@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutMemo"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:background="@drawable/memo_background">
+
+    <TextView
+        android:id="@+id/memoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_16ssp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:textColor="@color/colorLight"
+        android:includeFontPadding="false"/>
+
+    <TextView
+        android:id="@+id/memoSubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:textSize="@dimen/_12ssp"
+        android:includeFontPadding="false"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/ubuntu_medium"/>
+
+    <TextView
+        android:id="@+id/memoDateTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:textColor="@color/colorSecondary"
+        android:includeFontPadding="false"
+        android:textSize="@dimen/_8ssp"/>
+
+</LinearLayout>

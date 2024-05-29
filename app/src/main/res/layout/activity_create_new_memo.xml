@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/newNoteDateTime"
+        android:id="@+id/newMemoDateTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/new_memo_datetime_example"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@id/appTitleLayout"/>
 
     <EditText
-        android:id="@+id/noteTitle"
+        android:id="@+id/memoTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12sdp"
@@ -69,12 +69,12 @@
         android:textColorHighlight="@color/colorLight"
         android:hint="@string/memoTitleHint"
         android:textColorHint="@color/colorSecondary"
-        app:layout_constraintStart_toStartOf="@id/newNoteDateTime"
-        app:layout_constraintEnd_toEndOf="@id/newNoteDateTime"
-        app:layout_constraintTop_toBottomOf="@id/newNoteDateTime"/>
+        app:layout_constraintStart_toStartOf="@id/newMemoDateTime"
+        app:layout_constraintEnd_toEndOf="@id/newMemoDateTime"
+        app:layout_constraintTop_toBottomOf="@id/newMemoDateTime"/>
 
     <EditText
-        android:id="@+id/noteSubTitle"
+        android:id="@+id/memoSubTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:importantForAutofill="no"
@@ -86,13 +86,13 @@
         android:textColorHighlight="@color/colorLight"
         android:textColor="@color/colorSecondary"
         android:textColorHint="@color/colorSecondary"
-        app:layout_constraintStart_toStartOf="@id/noteTitle"
-        app:layout_constraintEnd_toEndOf="@id/noteTitle"
-        app:layout_constraintTop_toBottomOf="@id/noteTitle"
+        app:layout_constraintStart_toStartOf="@id/memoTitle"
+        app:layout_constraintEnd_toEndOf="@id/memoTitle"
+        app:layout_constraintTop_toBottomOf="@id/memoTitle"
         android:background="@null" />
 
     <EditText
-        android:id="@+id/noteContent"
+        android:id="@+id/memoContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12sdp"
@@ -108,9 +108,9 @@
         android:textColorHighlight="@color/colorLight"
         android:textColorHint="@color/colorSecondary"
         android:hint="@string/memo_content_hint"
-        app:layout_constraintStart_toStartOf="@+id/noteSubTitle"
-        app:layout_constraintEnd_toEndOf="@+id/noteSubTitle"
-        app:layout_constraintTop_toBottomOf="@+id/noteSubTitle"/>
+        app:layout_constraintStart_toStartOf="@+id/memoSubTitle"
+        app:layout_constraintEnd_toEndOf="@+id/memoSubTitle"
+        app:layout_constraintTop_toBottomOf="@+id/memoSubTitle"/>
     
     <RelativeLayout
         android:layout_width="match_parent"
