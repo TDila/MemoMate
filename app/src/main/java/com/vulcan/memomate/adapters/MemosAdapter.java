@@ -5,6 +5,7 @@ import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,17 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.vulcan.memomate.R;
 import com.vulcan.memomate.entities.Memo;
+import com.vulcan.memomate.listeners.MemosListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MemosAdapter extends RecyclerView.Adapter<MemosAdapter.ViewHolder> {
-    List<Memo> memos;
-    Context context;
+    private List<Memo> memos;
+    private Context context;
+    private MemosListener memosListener;
 
-    public MemosAdapter(List<Memo> memos, Context context) {
+    public MemosAdapter(List<Memo> memos, Context context, MemosListener memosListener) {
         this.memos = memos;
         this.context = context;
+        this.memosListener = memosListener;
     }
 
     @NonNull
@@ -42,6 +46,12 @@ public class MemosAdapter extends RecyclerView.Adapter<MemosAdapter.ViewHolder> 
             holder.memoSubtitle.setText(memos.get(position).getSubtitle());
         }
         holder.memoDateTime.setText(memos.get(position).getDateTime());
+        holder.layoutMemo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                memosListener.onMemoClicked(memos.get(position), position);
+            }
+        });
     }
 
     @Override
@@ -51,11 +61,13 @@ public class MemosAdapter extends RecyclerView.Adapter<MemosAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView memoTitle, memoSubtitle, memoDateTime;
+        LinearLayout layoutMemo;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             memoTitle = itemView.findViewById(R.id.memoTitle);
             memoSubtitle = itemView.findViewById(R.id.memoSubTitle);
             memoDateTime = itemView.findViewById(R.id.memoDateTime);
+            layoutMemo = itemView.findViewById(R.id.layoutMemo);
         }
     }
 }

@@ -20,6 +20,7 @@ import java.util.Locale;
 public class CreateNewMemo extends AppCompatActivity {
     private EditText memoTitle, memoSubTitle, memoContent;
     private TextView newMemoDateTime;
+    private Memo alreadyAvailableMemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,11 @@ public class CreateNewMemo extends AppCompatActivity {
                 saveNote();
             }
         });
+
+        if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
+            alreadyAvailableMemo = (Memo) getIntent().getSerializableExtra("memo");
+            setViewOrUpdateMemo();
+        }
     }
 
     private void initComponents(){
@@ -53,6 +59,13 @@ public class CreateNewMemo extends AppCompatActivity {
                 new SimpleDateFormat("EEEE, dd-MM-yyyy HH:mm:ss", Locale.getDefault())
                         .format(new Date())
         );
+    }
+
+    public void setViewOrUpdateMemo(){
+        memoTitle.setText(alreadyAvailableMemo.getTitle());
+        memoSubTitle.setText(alreadyAvailableMemo.getSubtitle());
+        memoContent.setText(alreadyAvailableMemo.getMemoContent());
+        newMemoDateTime.setText(alreadyAvailableMemo.getDateTime());
     }
 
     private void saveNote(){
@@ -68,6 +81,10 @@ public class CreateNewMemo extends AppCompatActivity {
             memo.setSubtitle(memoSubTitle.getText().toString());
             memo.setMemoContent(memoContent.getText().toString());
             memo.setDateTime(newMemoDateTime.getText().toString());
+
+            if(alreadyAvailableMemo != null){
+                memo.setId(alreadyAvailableMemo.getId());
+            }
 
             Thread thread = new Thread(new Runnable() {
                 @Override

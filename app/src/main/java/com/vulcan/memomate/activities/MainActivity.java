@@ -18,13 +18,17 @@ import com.vulcan.memomate.R;
 import com.vulcan.memomate.adapters.MemosAdapter;
 import com.vulcan.memomate.database.MemosDatabase;
 import com.vulcan.memomate.entities.Memo;
+import com.vulcan.memomate.listeners.MemosListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MemosListener {
 
     private static final Integer REQUEST_CODE_ADD_MEMO = 1;
+    private static final Integer REQUEST_CODE_UPDATE_MEMO = 2;
+    private static final Integer REQUEST_CODE_SHOW_MEMOS = 3;
+    private int memoClickedPosition = -1;
     private RecyclerView memosRecyclerView;
     private List<Memo> memoList;
     private MemosAdapter memosAdapter;
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult activityResult) {
                         if(activityResult.getResultCode() == RESULT_OK){
-                            getMemos();
+                            getMemos(REQUEST_CODE_ADD_MEMO);
                         }
                     }
                 });
@@ -56,17 +60,36 @@ public class MainActivity extends AppCompatActivity {
 
         memosRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         memoList = new ArrayList<>();
-        memosAdapter = new MemosAdapter(memoList,this);
+        memosAdapter = new MemosAdapter(memoList,this, this);
         memosRecyclerView.setAdapter(memosAdapter);
 
-        getMemos();
+        getMemos(REQUEST_CODE_SHOW_MEMOS);
+    }
+
+    ActivityResultLauncher<Intent> memoClicked = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult activityResult) {
+                    if(activityResult.getResultCode() == RESULT_OK && activityResult.getData() != null){
+                        getMemos(REQUEST_CODE_UPDATE_MEMO);
+                    }
+                }
+            });
+
+    @Override
+    public void onMemoClicked(Memo memo, int position) {
+        memoClickedPosition = position;
+        Intent intent = new Intent(MainActivity.this, CreateNewMemo.class);
+        intent.putExtra("isViewOrUpdate",true);
+        intent.putExtra("memo", memo);
+        memoClicked.launch(intent);
     }
 
     private void initComponents() {
         memosRecyclerView = findViewById(R.id.notesViewRecyclerView);
     }
 
-    private void getMemos(){
+    private void getMemos(final int requestCode){
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -74,14 +97,18 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(memoList.size() == 0){
+                        if(requestCode == REQUEST_CODE_SHOW_MEMOS){
                             memoList.addAll(memos);
                             memosAdapter.notifyDataSetChanged();
-                        }else{
-                            memoList.add(0,memos.get(0));
+                        }else if(requestCode == REQUEST_CODE_ADD_MEMO){
+                            memoList.add(0, memos.get(0));
                             memosAdapter.notifyItemInserted(0);
+                            memosRecyclerView.smoothScrollToPosition(0);
+                        }else if(requestCode == REQUEST_CODE_UPDATE_MEMO){
+                            memoList.remove(memoClickedPosition);
+                            memoList.add(memoClickedPosition, memos.get(memoClickedPosition));
+                            memosAdapter.notifyItemChanged(memoClickedPosition);
                         }
-                        memosRecyclerView.smoothScrollToPosition(0);
                     }
                 });
             }
