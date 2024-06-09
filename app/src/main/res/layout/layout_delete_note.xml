@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/deleteMemoLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:layout_gravity="center"
+    android:background="@drawable/memo_background">
+
+    <ImageView
+        android:id="@+id/deleteMemoIcon"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:src="@drawable/ic_delete"
+        app:tint="@color/colorLight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/deleteTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_memo"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/colorLight"
+        android:fontFamily="@font/ubuntu_bold"
+        android:layout_marginStart="@dimen/_8sdp"
+        app:layout_constraintTop_toTopOf="@id/deleteMemoIcon"
+        app:layout_constraintBottom_toBottomOf="@id/deleteMemoIcon"
+        app:layout_constraintStart_toEndOf="@id/deleteMemoIcon"/>
+
+    <TextView
+        android:id="@+id/deleteQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/ubuntu_regular"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="@id/deleteMemoIcon"
+        app:layout_constraintTop_toBottomOf="@id/deleteMemoIcon"
+        android:text="@string/delete_question"/>
+
+    <TextView
+        android:id="@+id/deleteCancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_medium"
+        android:text="@string/delete_cancel"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/colorLight"
+        android:layout_marginEnd="@dimen/_20sdp"
+        app:layout_constraintEnd_toStartOf="@id/deleteMemoButton"
+        app:layout_constraintTop_toTopOf="@id/deleteMemoButton"
+        app:layout_constraintBottom_toBottomOf="@id/deleteMemoButton"/>
+
+    <TextView
+        android:id="@+id/deleteMemoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_medium"
+        android:text="@string/delete_btn"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/colorLight"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deleteQuestion"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,4 +6,8 @@
     <string name="memoTitleHint">Title</string>
     <string name="memoSubtitleHint">Subtitle</string>
     <string name="memo_content_hint">Memo Content...</string>
+    <string name="delete_memo">Delete Memo</string>
+    <string name="delete_question">Are you sure you want to delete this Memo?</string>
+    <string name="delete_btn">DELETE</string>
+    <string name="delete_cancel">CANCEL</string>
 </resources>

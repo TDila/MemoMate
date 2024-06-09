@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.vulcan.memomate.R;
 import com.vulcan.memomate.adapters.MemosAdapter;
 import com.vulcan.memomate.database.MemosDatabase;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements MemosListener {
     private RecyclerView memosRecyclerView;
     private List<Memo> memoList;
     private MemosAdapter memosAdapter;
+    private TextInputEditText searchMemoField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MemosListener {
                     @Override
                     public void onActivityResult(ActivityResult activityResult) {
                         if(activityResult.getResultCode() == RESULT_OK){
-                            getMemos(REQUEST_CODE_ADD_MEMO);
+                            getMemos(REQUEST_CODE_ADD_MEMO,false);
                         }
                     }
                 });
@@ -63,7 +67,26 @@ public class MainActivity extends AppCompatActivity implements MemosListener {
         memosAdapter = new MemosAdapter(memoList,this, this);
         memosRecyclerView.setAdapter(memosAdapter);
 
-        getMemos(REQUEST_CODE_SHOW_MEMOS);
+        getMemos(REQUEST_CODE_SHOW_MEMOS,false);
+
+        searchMemoField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                memosAdapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(memoList.size() != 0){
+                    memosAdapter.searchNotes(s.toString());
+                }
+            }
+        });
     }
 
     ActivityResultLauncher<Intent> memoClicked = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -71,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements MemosListener {
                 @Override
                 public void onActivityResult(ActivityResult activityResult) {
                     if(activityResult.getResultCode() == RESULT_OK && activityResult.getData() != null){
-                        getMemos(REQUEST_CODE_UPDATE_MEMO);
+                        getMemos(REQUEST_CODE_UPDATE_MEMO, activityResult.getData().getBooleanExtra("isNoteDeleted",false));
                     }
                 }
             });
@@ -87,9 +110,10 @@ public class MainActivity extends AppCompatActivity implements MemosListener {
 
     private void initComponents() {
         memosRecyclerView = findViewById(R.id.notesViewRecyclerView);
+        searchMemoField = findViewById(R.id.searchMemoField);
     }
 
-    private void getMemos(final int requestCode){
+    private void getMemos(final int requestCode, final boolean isMemoDeleted){
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -106,8 +130,12 @@ public class MainActivity extends AppCompatActivity implements MemosListener {
                             memosRecyclerView.smoothScrollToPosition(0);
                         }else if(requestCode == REQUEST_CODE_UPDATE_MEMO){
                             memoList.remove(memoClickedPosition);
-                            memoList.add(memoClickedPosition, memos.get(memoClickedPosition));
-                            memosAdapter.notifyItemChanged(memoClickedPosition);
+                            if(isMemoDeleted){
+                                memosAdapter.notifyItemRemoved(memoClickedPosition);
+                            }else{
+                                memoList.add(memoClickedPosition, memos.get(memoClickedPosition));
+                                memosAdapter.notifyItemChanged(memoClickedPosition);
+                            }
                         }
                     }
                 });

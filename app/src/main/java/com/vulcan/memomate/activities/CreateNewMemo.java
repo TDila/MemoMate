@@ -1,11 +1,17 @@
 package com.vulcan.memomate.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +25,10 @@ import java.util.Locale;
 
 public class CreateNewMemo extends AppCompatActivity {
     private EditText memoTitle, memoSubTitle, memoContent;
-    private TextView newMemoDateTime;
+    private TextView newMemoDateTime,deleteMemoButton;
+    private ImageView deleteButton;
     private Memo alreadyAvailableMemo;
+    private AlertDialog dialogDeleteMemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,13 @@ public class CreateNewMemo extends AppCompatActivity {
         if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
             alreadyAvailableMemo = (Memo) getIntent().getSerializableExtra("memo");
             setViewOrUpdateMemo();
+            deleteButton.setVisibility(View.VISIBLE);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDeleteMemoDialog();
+                }
+            });
         }
     }
 
@@ -54,6 +69,8 @@ public class CreateNewMemo extends AppCompatActivity {
         memoSubTitle = findViewById(R.id.memoSubTitle);
         memoContent = findViewById(R.id.memoContent);
         newMemoDateTime = findViewById(R.id.newMemoDateTime);
+        deleteButton = findViewById(R.id.deleteButton);
+        deleteButton.setVisibility(View.GONE);
 
         newMemoDateTime.setText(
                 new SimpleDateFormat("EEEE, dd-MM-yyyy HH:mm:ss", Locale.getDefault())
@@ -66,6 +83,48 @@ public class CreateNewMemo extends AppCompatActivity {
         memoSubTitle.setText(alreadyAvailableMemo.getSubtitle());
         memoContent.setText(alreadyAvailableMemo.getMemoContent());
         newMemoDateTime.setText(alreadyAvailableMemo.getDateTime());
+    }
+
+    private void showDeleteMemoDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(CreateNewMemo.this);
+        View view = LayoutInflater.from(CreateNewMemo.this)
+                .inflate(R.layout.layout_delete_note, (ViewGroup) findViewById(R.id.deleteMemoLayout));
+        builder.setView(view);
+        dialogDeleteMemo = builder.create();
+        if(dialogDeleteMemo.getWindow() != null){
+            dialogDeleteMemo.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        view.findViewById(R.id.deleteMemoButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MemosDatabase.getDatabase(CreateNewMemo.this).memoDao().deleteMemo(alreadyAvailableMemo);
+
+                        CreateNewMemo.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent();
+                                intent.putExtra("isNoteDeleted",true);
+                                setResult(RESULT_OK,intent);
+                                finish();
+                            }
+                        });
+                    }
+                });
+                thread.start();
+            }
+        });
+
+        view.findViewById(R.id.deleteCancelButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogDeleteMemo.dismiss();
+            }
+        });
+
+        dialogDeleteMemo.show();
     }
 
     private void saveNote(){
